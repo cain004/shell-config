@@ -18,23 +18,35 @@ Re-run anytime to pull the latest changes.
 
 The install script will:
 
-1. Install **zsh** and **git** via apt if missing (Linux only)
-2. Install **Starship** prompt
-3. Clone this repo to `~/.shell-config`
-4. Back up existing dotfiles (`.zshrc`, `.bashrc`, `.aliases`, `.tmux.conf`, `starship.toml`) to `.bak`
-5. Symlink dotfiles from the repo into `~/` and `~/.config/`
-6. Set zsh as the default shell (Linux only, if not already zsh)
+1. Install **zsh**, **tmux**, **tree**, and **neovim** via apt if missing (Linux only)
+2. Install **nvim**, **tmux**, and **tree** via Homebrew if available (macOS only)
+3. Install **Starship** prompt
+4. Clone this repo to `~/.shell-config`
+5. Back up existing dotfiles to `.bak`
+6. Symlink dotfiles from the repo into `~/` and `~/.config/`
+7. Set zsh as the default shell (Linux only, if not already zsh)
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `.aliases` | Git and shell aliases — shared by bash and zsh |
-| `.zshrc` | Zsh config (macOS) — completion, history, PATH, Starship |
-| `.bashrc` | Bash config (Linux) — completion, history, colors, Starship |
-| `.tmux.conf` | Tmux configuration |
+| `.aliases` | Git, navigation, and shell aliases — shared by bash and zsh |
+| `.zshrc` | Zsh config — completion, history, editor, PATH, Starship |
+| `.bashrc` | Bash config — completion, history, colors, editor, PATH, Starship |
+| `.tmux.conf` | Tmux — 256color, mouse, history, window numbering |
+| `.gitconfig` | Git defaults — editor, default branch, pull strategy |
 | `starship.toml` | Starship prompt — Slingshot theme with git status and SSH detection |
 | `install.sh` | One-line installer |
+
+## Local overrides
+
+Machine-specific settings go in local files that are sourced but not tracked:
+
+| File | Purpose |
+|---|---|
+| `~/.local.zshrc` | Extra zsh config (e.g. JAVA_HOME, ANDROID_HOME) |
+| `~/.local.bashrc` | Extra bash config |
+| `~/.local.gitconfig` | Git user name and email |
 
 ## Git aliases
 
@@ -69,6 +81,9 @@ The install script will:
 | `ll` | `ls -AlFh` |
 | `la` | `ls -A` |
 | `lt` | `tree -C -L 2` |
+| `..` | `cd ..` |
+| `...` | `cd ../..` |
+| `mkd` | `mkdir -p` |
 
 ## Updating
 
