@@ -18,7 +18,7 @@ description = "Hostname when not in an SSH session"
 command = "hostname -s"
 when = '[ -z "$SSH_CONNECTION" ]'
 shell = ["bash", "--noprofile", "--norc"]
-style = "bold cyan"
+style = "cyan"
 format = '[$output]($style)[:](bright_black)'
 
 # ── Hostname: SSH (orange) ────────────────────
@@ -27,7 +27,7 @@ description = "Hostname when in an SSH session"
 command = "hostname -s"
 when = '[ -n "$SSH_CONNECTION" ]'
 shell = ["bash", "--noprofile", "--norc"]
-style = "bold 208"
+style = "208"
 format = '[$output]($style)[:](bright_black)'
 
 # ── Disable built-in hostname ─────────────────
@@ -37,13 +37,13 @@ disabled = true
 # ── Directory ─────────────────────────────────
 [directory]
 format = '[$path]($style)'
-style = 'bold yellow'
+style = 'yellow'
 truncation_length = 5
 truncation_symbol = '…/'
 home_symbol = '~'
 truncate_to_repo = false
 read_only = ' 󰌾'
-read_only_style = 'bold red'
+read_only_style = 'red'
 
 # ── Git: clean branch (green) ─────────────────
 [custom.git_clean]
@@ -51,7 +51,7 @@ description = "Git branch when working tree is clean"
 command = "git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null"
 when = "git rev-parse --git-dir > /dev/null 2>&1 && git diff --quiet 2>/dev/null && git diff --cached --quiet 2>/dev/null && [ -z \"$(git ls-files --others --exclude-standard 2>/dev/null)\" ]"
 shell = ["bash", "--noprofile", "--norc"]
-style = "bold green"
+style = "green"
 format = '[\[](bright_black)[$output]($style)[\]](bright_black)'
 
 # ── Git: dirty branch (red) ───────────────────
@@ -60,7 +60,7 @@ description = "Git branch when working tree has changes"
 command = "git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null"
 when = "git rev-parse --git-dir > /dev/null 2>&1 && ! { git diff --quiet 2>/dev/null && git diff --cached --quiet 2>/dev/null && [ -z \"$(git ls-files --others --exclude-standard 2>/dev/null)\" ]; }"
 shell = ["bash", "--noprofile", "--norc"]
-style = "bold red"
+style = "red"
 format = '[\[](bright_black)[$output]($style)[\]](bright_black)'
 
 # ── Disable built-in git modules ──────────────
