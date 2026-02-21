@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-VERSION="1.0.1"
+VERSION="1.0.2"
 REPO="https://github.com/cain004/shell-config.git"
 INSTALL_DIR="$HOME/.shell-config"
 
