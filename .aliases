@@ -1,0 +1,45 @@
+# ============================================================================
+# Portable aliases (bash + zsh)
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Git
+# ----------------------------------------------------------------------------
+git_current_branch() {
+  local ref
+  ref=$(git symbolic-ref --quiet HEAD 2>/dev/null)
+  local ret=$?
+  if [ $ret != 0 ]; then
+    [ $ret == 128 ] && return
+    ref=$(git rev-parse --short HEAD 2>/dev/null) || return
+  fi
+  echo "${ref#refs/heads/}"
+}
+
+alias ga='git add'
+alias gbl='git blame -b -w'
+alias gc='git commit -v'
+alias gcmsg='git commit -m'
+alias gco='git checkout'
+alias gcp='git cherry-pick'
+alias gclean='git clean -id'
+alias gpristine='git reset --hard && git clean -dffx'
+alias gd='git diff'
+alias gl='git pull'
+alias glg='git log --stat'
+alias glgg='git log --graph'
+alias glog='git log --oneline --decorate --graph'
+alias gp='git push'
+alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gst='git status'
+alias gsta='git stash push'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias gstc='git stash clear'
+alias gstall='git stash --all'
+
+# ----------------------------------------------------------------------------
+# LS
+# ----------------------------------------------------------------------------
+alias ll='ls -AlFh'
+alias la='ls -A'
