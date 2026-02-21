@@ -36,7 +36,7 @@ disabled = true
 
 # ── Directory ─────────────────────────────────
 [directory]
-format = '[$path]($style)'
+format = '[$path]($style) '
 style = 'yellow'
 truncation_length = 5
 truncation_symbol = '…/'
