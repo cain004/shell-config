@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starship Prompt — Monokai Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #2D2A2E;
+    --bg2:     #221F22;
+    --panel:   #403E41;
+    --comment: #75715E;
+    --fg:      #FCFCFA;
+    --yellow:  #FFD866;
+    --orange:  #FC9867;
+    --red:     #FF6188;
+    --green:   #A9DC76;
+    --cyan:    #78DCE8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg2);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 48px 24px; gap: 32px;
+  }
+  header { text-align: center; }
+  header h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 0.04em; color: var(--fg); margin-bottom: 4px; }
+  header p { font-size: 0.68rem; color: var(--comment); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .window {
+    width: 100%; max-width: 640px;
+    background: var(--bg); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 24px 64px rgba(0,0,0,0.6);
+  }
+  .titlebar {
+    background: var(--panel); padding: 11px 14px;
+    display: flex; align-items: center; gap: 7px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot-red    { background: #FF5F57; }
+  .dot-yellow { background: #FEBC2E; }
+  .dot-green  { background: #28C840; }
+  .titlebar-label { margin-left: auto; font-size: 0.65rem; color: var(--comment); letter-spacing: 0.08em; }
+
+  .terminal { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+  .label { font-size: 0.62rem; color: var(--comment); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; font-family: 'Syne', sans-serif; font-weight: 700; opacity: 0.6; }
+  .p { display: flex; flex-direction: column; }
+  .row { font-size: 0.9rem; line-height: 1.7; display: flex; align-items: baseline; white-space: pre; }
+
+  .host-local { color: var(--cyan);   font-weight: 700; }
+  .host-ssh   { color: var(--orange); font-weight: 700; }
+  .sep        { color: var(--comment); }
+  .path       { color: var(--yellow); font-weight: 700; }
+  .brd        { color: var(--comment); }
+  .clean      { color: var(--green);  font-weight: 700; }
+  .dirty      { color: var(--red);    font-weight: 700; }
+  .ok         { color: var(--green);  font-weight: 700; }
+  .err        { color: var(--red);    font-weight: 700; }
+  .cmd        { color: var(--fg); }
+
+  .divider { height: 1px; background: rgba(255,255,255,0.05); }
+
+  .cursor {
+    display: inline-block; width: 8px; height: 1em;
+    background: var(--green); vertical-align: text-bottom;
+    animation: blink 1.1s step-end infinite; margin-left: 1px;
+  }
+  @keyframes blink { 0%,100% { opacity: 0.85; } 50% { opacity: 0; } }
+
+  .legend {
+    width: 100%; max-width: 640px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .leg {
+    background: var(--bg); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.78rem;
+  }
+  .leg-swatch { font-weight: 700; min-width: 48px; }
+  .leg-desc { color: var(--comment); font-size: 0.68rem; font-family: 'Syne', sans-serif; line-height: 1.4; }
+
+  .install {
+    width: 100%; max-width: 640px;
+    background: var(--bg); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 14px 18px;
+    font-size: 0.75rem; color: var(--comment); line-height: 2;
+  }
+  .install .ic { color: var(--cyan); }
+  .install .iv { color: var(--fg); opacity: 0.65; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Starship · Slingshot</h1>
+  <p>zsh prompt preview</p>
+</header>
+
+<div class="window">
+  <div class="titlebar">
+    <div class="dot dot-red"></div>
+    <div class="dot dot-yellow"></div>
+    <div class="dot dot-green"></div>
+    <span class="titlebar-label">zsh</span>
+  </div>
+  <div class="terminal">
+
+    <div>
+      <div class="label">// local · no git</div>
+      <div class="p">
+        <div class="row"><span class="host-local">work-laptop</span><span class="sep">:</span><span class="path">~</span></div>
+        <div class="row"><span class="ok">❯ </span><span class="cmd">ls</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="label">// local · git clean</div>
+      <div class="p">
+        <div class="row"><span class="host-local">work-laptop</span><span class="sep">:</span><span class="path">~/projects/slingshot</span><span class="brd">[</span><span class="clean">main</span><span class="brd">]</span></div>
+        <div class="row"><span class="ok">❯ </span><span class="cmd">git pull</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="label">// local · git dirty</div>
+      <div class="p">
+        <div class="row"><span class="host-local">work-laptop</span><span class="sep">:</span><span class="path">~/projects/slingshot/ios</span><span class="brd">[</span><span class="dirty">feat/booking</span><span class="brd">]</span></div>
+        <div class="row"><span class="ok">❯ </span><span class="cmd">git add -p</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="label">// ssh · git clean</div>
+      <div class="p">
+        <div class="row"><span class="host-ssh">prod-server</span><span class="sep">:</span><span class="path">~/apps/slingshot</span><span class="brd">[</span><span class="clean">main</span><span class="brd">]</span></div>
+        <div class="row"><span class="ok">❯ </span><span class="cmd">systemctl status slingshot</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="label">// ssh · git dirty</div>
+      <div class="p">
+        <div class="row"><span class="host-ssh">prod-server</span><span class="sep">:</span><span class="path">~/apps/slingshot</span><span class="brd">[</span><span class="dirty">main</span><span class="brd">]</span></div>
+        <div class="row"><span class="ok">❯ </span><span class="cmd">git diff</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="label">// error exit</div>
+      <div class="p">
+        <div class="row"><span class="host-local">work-laptop</span><span class="sep">:</span><span class="path">~/projects/slingshot</span><span class="brd">[</span><span class="clean">main</span><span class="brd">]</span></div>
+        <div class="row"><span class="err">❯ </span><span class="cursor"></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg"><span class="leg-swatch" style="color:var(--cyan)">work-laptop</span><div class="leg-desc">Local session<br>#78DCE8 Cyan</div></div>
+  <div class="leg"><span class="leg-swatch" style="color:var(--orange)">server</span><div class="leg-desc">SSH session<br>#FC9867 Orange</div></div>
+  <div class="leg"><span class="leg-swatch" style="color:var(--green)">[main]</span><div class="leg-desc">Git clean<br>#A9DC76 Green</div></div>
+  <div class="leg"><span class="leg-swatch" style="color:var(--red)">[main]</span><div class="leg-desc">Git dirty<br>#FF6188 Red</div></div>
+</div>
+
+</body>
+</html>

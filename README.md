@@ -2,6 +2,10 @@
 
 Portable shell configuration for macOS (zsh) and Linux (bash/zsh). Uses [Starship](https://starship.rs/) for a consistent prompt across shells and machines.
 
+## Slingshot Theme
+
+![Starship Slingshot prompt preview](preview.png)
+
 ## Install
 
 ```sh
@@ -17,8 +21,8 @@ The install script will:
 1. Install **zsh** and **git** via apt if missing (Linux only)
 2. Install **Starship** prompt
 3. Clone this repo to `~/.shell-config`
-4. Back up existing dotfiles (`.zshrc`, `.bashrc`, `.aliases`) to `.bak`
-5. Symlink dotfiles from the repo into `~/.`
+4. Back up existing dotfiles (`.zshrc`, `.bashrc`, `.aliases`, `starship.toml`) to `.bak`
+5. Symlink dotfiles from the repo into `~/` and `~/.config/`
 6. Set zsh as the default shell (Linux only, if not already zsh)
 
 ## Files
@@ -28,6 +32,7 @@ The install script will:
 | `.aliases` | Git and shell aliases — shared by bash and zsh |
 | `.zshrc` | Zsh config (macOS) — completion, history, PATH, Starship |
 | `.bashrc` | Bash config (Linux) — completion, history, colors, Starship |
+| `starship.toml` | Starship prompt — Slingshot theme with git status and SSH detection |
 | `install.sh` | One-line installer |
 
 ## Git aliases

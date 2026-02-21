@@ -1,0 +1,77 @@
+# Starship Prompt — Slingshot Theme
+# ~/.config/starship.toml
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+${custom.host_local}\
+${custom.host_ssh}\
+$directory\
+${custom.git_clean}\
+${custom.git_dirty}\
+$line_break\
+$character"""
+
+# ── Hostname: local (cyan) ────────────────────
+[custom.host_local]
+description = "Hostname when not in an SSH session"
+command = "hostname -s"
+when = '[ -z "$SSH_CONNECTION" ]'
+shell = ["bash", "--noprofile", "--norc"]
+style = "bold #78DCE8"
+format = '[$output]($style)[:](fg:#75715E)'
+
+# ── Hostname: SSH (orange) ────────────────────
+[custom.host_ssh]
+description = "Hostname when in an SSH session"
+command = "hostname -s"
+when = '[ -n "$SSH_CONNECTION" ]'
+shell = ["bash", "--noprofile", "--norc"]
+style = "bold #FC9867"
+format = '[$output]($style)[:](fg:#75715E)'
+
+# ── Disable built-in hostname ─────────────────
+[hostname]
+disabled = true
+
+# ── Directory ─────────────────────────────────
+[directory]
+format = '[$path]($style)'
+style = 'bold #FFD866'
+truncation_length = 5
+truncation_symbol = '…/'
+home_symbol = '~'
+truncate_to_repo = false
+read_only = ' 󰌾'
+read_only_style = 'bold #FF6188'
+
+# ── Git: clean branch (green) ─────────────────
+[custom.git_clean]
+description = "Git branch when working tree is clean"
+command = "git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null"
+when = "git rev-parse --git-dir > /dev/null 2>&1 && git diff --quiet 2>/dev/null && git diff --cached --quiet 2>/dev/null && [ -z \"$(git ls-files --others --exclude-standard 2>/dev/null)\" ]"
+shell = ["bash", "--noprofile", "--norc"]
+style = "bold #A9DC76"
+format = '[\[](fg:#75715E)[$output]($style)[\]](fg:#75715E)'
+
+# ── Git: dirty branch (red) ───────────────────
+[custom.git_dirty]
+description = "Git branch when working tree has changes"
+command = "git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null"
+when = "git rev-parse --git-dir > /dev/null 2>&1 && ! { git diff --quiet 2>/dev/null && git diff --cached --quiet 2>/dev/null && [ -z \"$(git ls-files --others --exclude-standard 2>/dev/null)\" ]; }"
+shell = ["bash", "--noprofile", "--norc"]
+style = "bold #FF6188"
+format = '[\[](fg:#75715E)[$output]($style)[\]](fg:#75715E)'
+
+# ── Disable built-in git modules ──────────────
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
+
+# ── Prompt character ──────────────────────────
+[character]
+success_symbol = '[❯](bold #A9DC76)'
+error_symbol = '[❯](bold #FF6188)'
+vimcmd_symbol = '[❮](bold #78DCE8)'

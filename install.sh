@@ -111,6 +111,11 @@ backup "$HOME/.bashrc"
 ln -sf "$INSTALL_DIR/.bashrc" "$HOME/.bashrc"
 info "Linked .bashrc"
 
+mkdir -p "$HOME/.config"
+backup "$HOME/.config/starship.toml"
+ln -sf "$INSTALL_DIR/starship.toml" "$HOME/.config/starship.toml"
+info "Linked starship.toml"
+
 # ----------------------------------------------------------------------------
 # Set default shell to zsh (Linux only, if not already)
 # ----------------------------------------------------------------------------
