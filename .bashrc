@@ -28,6 +28,8 @@ if ! shopt -oq posix; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+  elif [ -f /opt/homebrew/etc/bash_completion ]; then
+    . /opt/homebrew/etc/bash_completion
   fi
 fi
 
@@ -41,6 +43,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ----------------------------------------------------------------------------
+# Editor
+# ----------------------------------------------------------------------------
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# ----------------------------------------------------------------------------
 # Aliases
 # ----------------------------------------------------------------------------
 [ -f ~/.aliases ] && source ~/.aliases
@@ -48,9 +56,15 @@ fi
 # ----------------------------------------------------------------------------
 # PATH
 # ----------------------------------------------------------------------------
+[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # ----------------------------------------------------------------------------
 # Starship prompt (install: curl -sS https://starship.rs/install.sh | sh)
 # ----------------------------------------------------------------------------
 eval "$(starship init bash)"
+
+# ----------------------------------------------------------------------------
+# Local overrides (machine-specific, not in repo)
+# ----------------------------------------------------------------------------
+[ -f ~/.local.bashrc ] && source ~/.local.bashrc

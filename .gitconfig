@@ -1,0 +1,20 @@
+# ============================================================================
+# Git Configuration (portable — no user-specific fields)
+# ============================================================================
+# Set name/email in ~/.local.gitconfig:
+#   [user]
+#     name = Your Name
+#     email = you@example.com
+
+[include]
+    path = ~/.local.gitconfig
+
+[core]
+    autocrlf = input
+    editor = nvim
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false

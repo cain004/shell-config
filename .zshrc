@@ -17,7 +17,7 @@ autoload bashcompinit && bashcompinit
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE APPEND_HISTORY SHARE_HISTORY
+setopt HIST_IGNORE_DUPS HIST_FIND_NO_DUPS HIST_IGNORE_SPACE APPEND_HISTORY SHARE_HISTORY
 
 # ----------------------------------------------------------------------------
 # Shell options
@@ -30,16 +30,16 @@ setopt AUTO_CD INTERACTIVE_COMMENTS
 [ -f ~/.aliases ] && source ~/.aliases
 
 # ----------------------------------------------------------------------------
+# Editor
+# ----------------------------------------------------------------------------
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# ----------------------------------------------------------------------------
 # PATH
 # ----------------------------------------------------------------------------
-export PATH=/opt/homebrew/bin/:$PATH
-export PATH="/opt/homebrew/opt/node@14/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-
-# Java / Android
-export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-export ANDROID_HOME="$HOME/Library/Android/sdk"
 
 # ----------------------------------------------------------------------------
 # Starship prompt (install: brew install starship)
@@ -54,3 +54,8 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search   # Up arrow
 bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down arrow
+
+# ----------------------------------------------------------------------------
+# Local overrides (machine-specific, not in repo)
+# ----------------------------------------------------------------------------
+[ -f ~/.local.zshrc ] && source ~/.local.zshrc

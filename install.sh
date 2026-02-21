@@ -46,20 +46,36 @@ info "Detected OS: $OS"
 # ----------------------------------------------------------------------------
 if [ "$OS" = "linux" ]; then
   NEEDS_UPDATE=0
-  for cmd in git zsh tmux tree; do
+  for cmd in git zsh tmux tree nvim; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       if [ "$NEEDS_UPDATE" -eq 0 ]; then
         info "Updating package list..."
         $SUDO apt-get update -qq
         NEEDS_UPDATE=1
       fi
-      info "Installing $cmd..."
-      $SUDO apt-get install -y -qq "$cmd"
+      pkg="$cmd"
+      [ "$cmd" = "nvim" ] && pkg="neovim"
+      info "Installing $pkg..."
+      $SUDO apt-get install -y -qq "$pkg"
     fi
   done
 else
   if ! command -v git >/dev/null 2>&1; then
-    error "git not found. Install it with: brew install git"
+    error "git not found. Install Xcode CLI tools: xcode-select --install"
+  fi
+  if command -v brew >/dev/null 2>&1; then
+    for cmd in nvim tmux tree; do
+      if ! command -v "$cmd" >/dev/null 2>&1; then
+        info "Installing $cmd..."
+        brew install "$cmd"
+      fi
+    done
+  else
+    for cmd in nvim tmux tree; do
+      if ! command -v "$cmd" >/dev/null 2>&1; then
+        warn "$cmd not found. Install it with: brew install $cmd"
+      fi
+    done
   fi
 fi
 
@@ -112,6 +128,10 @@ info "Linked .bashrc"
 backup "$HOME/.tmux.conf"
 ln -sf "$INSTALL_DIR/.tmux.conf" "$HOME/.tmux.conf"
 info "Linked .tmux.conf"
+
+backup "$HOME/.gitconfig"
+ln -sf "$INSTALL_DIR/.gitconfig" "$HOME/.gitconfig"
+info "Linked .gitconfig"
 
 mkdir -p "$HOME/.config"
 backup "$HOME/.config/starship.toml"
