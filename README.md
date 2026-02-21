@@ -68,6 +68,7 @@ The install script will:
 |---|---|
 | `ll` | `ls -AlFh` |
 | `la` | `ls -A` |
+| `lt` | `tree -C -L 2` |
 
 ## Updating
 

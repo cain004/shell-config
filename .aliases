@@ -50,6 +50,7 @@ else
 fi
 alias ll='ls -AlFh'
 alias la='ls -A'
+alias lt='tree -C -L 2'
 
 # ----------------------------------------------------------------------------
 # Colorize

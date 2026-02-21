@@ -46,7 +46,7 @@ info "Detected OS: $OS"
 # ----------------------------------------------------------------------------
 if [ "$OS" = "linux" ]; then
   NEEDS_UPDATE=0
-  for cmd in git zsh tmux; do
+  for cmd in git zsh tmux tree; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       if [ "$NEEDS_UPDATE" -eq 0 ]; then
         info "Updating package list..."
