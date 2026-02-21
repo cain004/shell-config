@@ -18,6 +18,13 @@ backup() {
   fi
 }
 
+# Use sudo only if not root
+if [ "$(id -u)" -eq 0 ]; then
+  SUDO=""
+else
+  SUDO="sudo"
+fi
+
 # ----------------------------------------------------------------------------
 # Detect OS
 # ----------------------------------------------------------------------------
@@ -31,25 +38,23 @@ esac
 info "Detected OS: $OS"
 
 # ----------------------------------------------------------------------------
-# Install zsh (Linux only)
+# Install apt packages (Linux only)
 # ----------------------------------------------------------------------------
-if ! command -v zsh >/dev/null 2>&1; then
-  if [ "$OS" = "linux" ]; then
-    info "Installing zsh..."
-    sudo apt-get update -qq && sudo apt-get install -y -qq zsh
-  else
-    error "zsh not found. Install it with: brew install zsh"
-  fi
-fi
-
-# ----------------------------------------------------------------------------
-# Install git if missing
-# ----------------------------------------------------------------------------
-if ! command -v git >/dev/null 2>&1; then
-  if [ "$OS" = "linux" ]; then
-    info "Installing git..."
-    sudo apt-get update -qq && sudo apt-get install -y -qq git
-  else
+if [ "$OS" = "linux" ]; then
+  NEEDS_UPDATE=0
+  for cmd in git zsh; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      if [ "$NEEDS_UPDATE" -eq 0 ]; then
+        info "Updating package list..."
+        $SUDO apt-get update -qq
+        NEEDS_UPDATE=1
+      fi
+      info "Installing $cmd..."
+      $SUDO apt-get install -y -qq "$cmd"
+    fi
+  done
+else
+  if ! command -v git >/dev/null 2>&1; then
     error "git not found. Install it with: brew install git"
   fi
 fi
