@@ -101,11 +101,9 @@ info "Linked .aliases"
 
 CURRENT_SHELL="$(basename "$SHELL")"
 
-if [ "$CURRENT_SHELL" = "zsh" ] || [ "$OS" = "mac" ]; then
-  backup "$HOME/.zshrc"
-  ln -sf "$INSTALL_DIR/.zshrc" "$HOME/.zshrc"
-  info "Linked .zshrc"
-fi
+backup "$HOME/.zshrc"
+ln -sf "$INSTALL_DIR/.zshrc" "$HOME/.zshrc"
+info "Linked .zshrc"
 
 backup "$HOME/.bashrc"
 ln -sf "$INSTALL_DIR/.bashrc" "$HOME/.bashrc"
@@ -120,8 +118,11 @@ info "Linked starship.toml"
 # Set default shell to zsh (Linux only, if not already)
 # ----------------------------------------------------------------------------
 if [ "$OS" = "linux" ] && [ "$CURRENT_SHELL" != "zsh" ]; then
-  info "Changing default shell to zsh..."
-  chsh -s "$(which zsh)"
+  if $SUDO chsh -s "$(which zsh)" "$(whoami)" 2>/dev/null; then
+    info "Default shell changed to zsh"
+  else
+    warn "Could not change default shell. Run manually: chsh -s \$(which zsh)"
+  fi
 fi
 
 # ----------------------------------------------------------------------------
