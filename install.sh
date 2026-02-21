@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+VERSION="1.0.1"
 REPO="https://github.com/cain004/shell-config.git"
 INSTALL_DIR="$HOME/.shell-config"
 
@@ -35,6 +36,9 @@ case "$OS" in
   *)       error "Unsupported OS: $OS" ;;
 esac
 
+printf "\n"
+printf "\033[1;36m  shell-config installer v%s\033[0m\n" "$VERSION"
+printf "\n"
 info "Detected OS: $OS"
 
 # ----------------------------------------------------------------------------
