@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-VERSION="1.0.2"
+VERSION="1.0.3"
 REPO="https://github.com/cain004/shell-config.git"
 INSTALL_DIR="$HOME/.shell-config"
 
@@ -46,7 +46,7 @@ info "Detected OS: $OS"
 # ----------------------------------------------------------------------------
 if [ "$OS" = "linux" ]; then
   NEEDS_UPDATE=0
-  for cmd in git zsh; do
+  for cmd in git zsh tmux; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       if [ "$NEEDS_UPDATE" -eq 0 ]; then
         info "Updating package list..."
@@ -108,6 +108,10 @@ info "Linked .zshrc"
 backup "$HOME/.bashrc"
 ln -sf "$INSTALL_DIR/.bashrc" "$HOME/.bashrc"
 info "Linked .bashrc"
+
+backup "$HOME/.tmux.conf"
+ln -sf "$INSTALL_DIR/.tmux.conf" "$HOME/.tmux.conf"
+info "Linked .tmux.conf"
 
 mkdir -p "$HOME/.config"
 backup "$HOME/.config/starship.toml"
