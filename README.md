@@ -59,6 +59,7 @@ Machine-specific settings go in local files that are sourced but not tracked:
 | `gco` | `git checkout` |
 | `gcp` | `git cherry-pick` |
 | `gclean` | `git clean -id` |
+| `gcm` | `git checkout main` |
 | `gpristine` | `git reset --hard && git clean -dffx` |
 | `gd` | `git diff` |
 | `gl` | `git pull` |
