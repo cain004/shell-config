@@ -52,8 +52,10 @@ eval "$(starship init zsh)"
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search   # Up arrow
-bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down arrow
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search   # Up arrow (application mode)
+bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down arrow (application mode)
+bindkey "^[[A" up-line-or-beginning-search                 # Up arrow (normal mode)
+bindkey "^[[B" down-line-or-beginning-search               # Down arrow (normal mode)
 
 # ----------------------------------------------------------------------------
 # Local overrides (machine-specific, not in repo)
