@@ -58,6 +58,11 @@ bindkey "^[[A" up-line-or-beginning-search                 # Up arrow (normal mo
 bindkey "^[[B" down-line-or-beginning-search               # Down arrow (normal mode)
 
 # ----------------------------------------------------------------------------
+# Terminal title
+# ----------------------------------------------------------------------------
+set_terminal_title() { echo -en "\e]1;$@\a"; }
+
+# ----------------------------------------------------------------------------
 # Local overrides (machine-specific, not in repo)
 # ----------------------------------------------------------------------------
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
