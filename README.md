@@ -86,6 +86,12 @@ Machine-specific settings go in local files that are sourced but not tracked:
 | `...` | `cd ../..` |
 | `mkd` | `mkdir -p` |
 
+## Shell functions
+
+| Function | Description |
+|---|---|
+| `set_terminal_title <title>` | Set the terminal tab title |
+
 ## Updating
 
 Since the dotfiles are symlinked, pulling the repo updates everything:
