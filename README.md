@@ -37,6 +37,7 @@ The install script will:
 | `.gitconfig` | Git defaults — editor, default branch, pull strategy |
 | `starship.toml` | Starship prompt — Slingshot theme with git status and SSH detection |
 | `install.sh` | One-line installer |
+| `uninstall.sh` | Removes symlinks and restores backups |
 
 ## Local overrides
 
@@ -91,6 +92,14 @@ Machine-specific settings go in local files that are sourced but not tracked:
 | Function | Description |
 |---|---|
 | `set_terminal_title <title>` | Set the terminal tab title |
+
+## Uninstall
+
+```sh
+sh ~/.shell-config/uninstall.sh
+```
+
+This removes all symlinks, restores any `.bak` backups, and optionally deletes `~/.shell-config`.
 
 ## Updating
 
