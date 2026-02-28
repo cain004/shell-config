@@ -93,6 +93,8 @@ Machine-specific settings go in local files that are sourced but not tracked:
 |---|---|
 | `set_terminal_title <title>` | Set the terminal tab title |
 
+Both `.bashrc` and `.zshrc` set `DISABLE_AUTO_TITLE="true"` to prevent frameworks (oh-my-zsh, iTerm2, etc.) from overriding manually set terminal titles.
+
 ## Uninstall
 
 ```sh
