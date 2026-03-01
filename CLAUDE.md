@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portable shell configuration for macOS (zsh) and Linux (bash/zsh) with Starship prompt. Dotfiles are symlinked from `~/.shell-config` into `~/` by `install.sh`.
+Portable shell configuration for macOS (zsh) and Linux (bash/zsh) with Starship prompt. Dotfiles are symlinked from `~/.slingshot` into `~/` by `install.sh`.
 
 ## Architecture
 

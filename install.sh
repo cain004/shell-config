@@ -1,9 +1,10 @@
 #!/bin/sh
 set -e
 
-VERSION="1.0.3"
-REPO="https://github.com/cain004/shell-config.git"
-INSTALL_DIR="$HOME/.shell-config"
+VERSION="2.0.0"
+REPO="https://github.com/cain004/slingshot.git"
+INSTALL_DIR="$HOME/.slingshot"
+OLD_INSTALL_DIR="$HOME/.shell-config"
 
 # ----------------------------------------------------------------------------
 # Helpers
@@ -37,7 +38,7 @@ case "$OS" in
 esac
 
 printf "\n"
-printf "\033[1;36m  shell-config installer v%s\033[0m\n" "$VERSION"
+printf "\033[1;36m  slingshot installer v%s\033[0m\n" "$VERSION"
 printf "\n"
 info "Detected OS: $OS"
 
@@ -98,11 +99,18 @@ fi
 # ----------------------------------------------------------------------------
 # Clone or update repo
 # ----------------------------------------------------------------------------
+# Migrate from old ~/.shell-config location
+if [ -d "$OLD_INSTALL_DIR" ] && [ ! -d "$INSTALL_DIR" ]; then
+  info "Migrating $OLD_INSTALL_DIR -> $INSTALL_DIR..."
+  mv "$OLD_INSTALL_DIR" "$INSTALL_DIR"
+  git -C "$INSTALL_DIR" remote set-url origin "$REPO"
+fi
+
 if [ -d "$INSTALL_DIR" ]; then
-  info "Updating shell-config..."
+  info "Updating slingshot..."
   git -C "$INSTALL_DIR" pull --quiet
 else
-  info "Cloning shell-config..."
+  info "Cloning slingshot..."
   git clone --quiet "$REPO" "$INSTALL_DIR"
 fi
 

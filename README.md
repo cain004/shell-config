@@ -1,4 +1,4 @@
-# shell-config
+# slingshot
 
 Portable shell configuration for macOS (zsh) and Linux (bash/zsh). Uses [Starship](https://starship.rs/) for a consistent prompt across shells and machines.
 
@@ -9,7 +9,7 @@ Portable shell configuration for macOS (zsh) and Linux (bash/zsh). Uses [Starshi
 ## Install
 
 ```sh
-curl -sS https://raw.githubusercontent.com/cain004/shell-config/main/install.sh | sh
+curl -sS https://raw.githubusercontent.com/cain004/slingshot/main/install.sh | sh
 ```
 
 Re-run anytime to pull the latest changes.
@@ -21,7 +21,7 @@ The install script will:
 1. Install **zsh**, **tmux**, **tree**, and **neovim** via apt if missing (Linux only)
 2. Install **nvim**, **tmux**, and **tree** via Homebrew if available (macOS only)
 3. Install **Starship** prompt
-4. Clone this repo to `~/.shell-config`
+4. Clone this repo to `~/.slingshot`
 5. Back up existing dotfiles to `.bak`
 6. Symlink dotfiles from the repo into `~/` and `~/.config/`
 7. Set zsh as the default shell (Linux only, if not already zsh)
@@ -59,6 +59,7 @@ Machine-specific settings go in local files that are sourced but not tracked:
 | `gcmsg` | `git commit -m` |
 | `gco` | `git checkout` |
 | `gcp` | `git cherry-pick` |
+| `gcl` | `git clone` |
 | `gclean` | `git clean -id` |
 | `gcm` | `git checkout main` |
 | `gpristine` | `git reset --hard && git clean -dffx` |
@@ -98,17 +99,17 @@ Both `.bashrc` and `.zshrc` set `DISABLE_AUTO_TITLE="true"` to prevent framework
 ## Uninstall
 
 ```sh
-sh ~/.shell-config/uninstall.sh
+sh ~/.slingshot/uninstall.sh
 ```
 
-This removes all symlinks, restores any `.bak` backups, and optionally deletes `~/.shell-config`.
+This removes all symlinks, restores any `.bak` backups, and optionally deletes `~/.slingshot`.
 
 ## Updating
 
 Since the dotfiles are symlinked, pulling the repo updates everything:
 
 ```sh
-cd ~/.shell-config && git pull
+cd ~/.slingshot && git pull
 ```
 
 Or just re-run the install command.

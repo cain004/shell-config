@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 
-INSTALL_DIR="$HOME/.shell-config"
+INSTALL_DIR="$HOME/.slingshot"
+OLD_INSTALL_DIR="$HOME/.shell-config"
 
 # ----------------------------------------------------------------------------
 # Helpers
@@ -11,7 +12,7 @@ warn() { printf "\033[1;33m==>\033[0m %s\n" "$1"; }
 error() { printf "\033[1;31m==>\033[0m %s\n" "$1"; exit 1; }
 
 printf "\n"
-printf "\033[1;36m  shell-config uninstaller\033[0m\n"
+printf "\033[1;36m  slingshot uninstaller\033[0m\n"
 printf "\n"
 
 # ----------------------------------------------------------------------------
@@ -49,6 +50,12 @@ remove_link "$HOME/.config/starship.toml"
 # ----------------------------------------------------------------------------
 # Optionally remove the repo
 # ----------------------------------------------------------------------------
+# Clean up old location if it still exists
+if [ -d "$OLD_INSTALL_DIR" ]; then
+  rm -rf "$OLD_INSTALL_DIR"
+  info "Removed old $OLD_INSTALL_DIR"
+fi
+
 if [ -d "$INSTALL_DIR" ]; then
   printf "\n"
   printf "Remove %s? [y/N] " "$INSTALL_DIR"
