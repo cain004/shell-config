@@ -65,3 +65,12 @@ alias mkd='mkdir -p'
 # Colorize
 # ----------------------------------------------------------------------------
 alias grep='grep --color=auto'
+
+# ----------------------------------------------------------------------------
+# Cmux (macOS terminal multiplexer)
+# ----------------------------------------------------------------------------
+if command -v cmux >/dev/null 2>&1; then
+  alias cm='cmux'
+  alias cmn='cmux new-window'
+  alias cml='cmux list-windows'
+fi

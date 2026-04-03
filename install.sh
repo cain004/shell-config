@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-VERSION="2.0.0"
+VERSION="2.1.0"
 REPO="https://github.com/cain004/slingshot.git"
 INSTALL_DIR="$HOME/.slingshot"
 OLD_INSTALL_DIR="$HOME/.shell-config"
@@ -145,6 +145,15 @@ mkdir -p "$HOME/.config"
 backup "$HOME/.config/starship.toml"
 ln -sf "$INSTALL_DIR/starship.toml" "$HOME/.config/starship.toml"
 info "Linked starship.toml"
+
+# Ghostty config (macOS only)
+if [ "$OS" = "mac" ]; then
+  GHOSTTY_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
+  mkdir -p "$GHOSTTY_DIR"
+  backup "$GHOSTTY_DIR/config"
+  ln -sf "$INSTALL_DIR/ghostty/config" "$GHOSTTY_DIR/config"
+  info "Linked ghostty/config"
+fi
 
 # ----------------------------------------------------------------------------
 # Set default shell to zsh (Linux only, if not already)
