@@ -28,7 +28,7 @@ else
 fi
 
 # ----------------------------------------------------------------------------
-# Detect OS
+# Detect OS and distro
 # ----------------------------------------------------------------------------
 OS="$(uname -s)"
 case "$OS" in
@@ -37,16 +37,27 @@ case "$OS" in
   *)       error "Unsupported OS: $OS" ;;
 esac
 
+# Detect Linux distro
+DISTRO=""
+if [ "$OS" = "linux" ]; then
+  if [ -f /etc/os-release ]; then
+    DISTRO="$(. /etc/os-release && echo "$ID")"
+  fi
+fi
+
 printf "\n"
 printf "\033[1;36m  slingshot installer v%s\033[0m\n" "$VERSION"
 printf "\n"
 info "Detected OS: $OS"
+[ -n "$DISTRO" ] && info "Detected distro: $DISTRO"
 
 # ----------------------------------------------------------------------------
-# Install apt packages (Linux only)
+# Install packages (Linux only)
 # ----------------------------------------------------------------------------
 if [ "$OS" = "linux" ]; then
   NEEDS_UPDATE=0
+
+  # apt-based distros (Debian, Ubuntu, etc.)
   apt_install() {
     if [ "$NEEDS_UPDATE" -eq 0 ]; then
       info "Updating package list..."
@@ -56,18 +67,56 @@ if [ "$OS" = "linux" ]; then
     info "Installing $1..."
     $SUDO apt-get install -y -qq "$1"
   }
+
+  # pacman-based distros (Arch, CachyOS, etc.)
+  pacman_install() {
+    if [ "$NEEDS_UPDATE" -eq 0 ]; then
+      info "Updating package database..."
+      $SUDO pacman -Sy --noconfirm
+      NEEDS_UPDATE=1
+    fi
+    info "Installing $1..."
+    $SUDO pacman -S --noconfirm --needed "$1"
+  }
+
+  # Select package manager
+  if [ "$DISTRO" = "arch" ] || [ "$DISTRO" = "cachyos" ] || command -v pacman >/dev/null 2>&1; then
+    PM="pacman"
+  else
+    PM="apt"
+  fi
+
+  install_pkg() {
+    if [ "$PM" = "pacman" ]; then
+      pacman_install "$1"
+    else
+      apt_install "$1"
+    fi
+  }
+
+  # Core packages
   for cmd in git zsh tmux tree nvim; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       pkg="$cmd"
       [ "$cmd" = "nvim" ] && pkg="neovim"
-      apt_install "$pkg"
+      install_pkg "$pkg"
     fi
   done
-  for pkg in zsh-autosuggestions zsh-syntax-highlighting; do
-    if [ ! -f "/usr/share/$pkg/$pkg.zsh" ]; then
-      apt_install "$pkg"
-    fi
-  done
+
+  # Zsh plugins (different paths for apt vs pacman)
+  if [ "$PM" = "pacman" ]; then
+    for pkg in zsh-autosuggestions zsh-syntax-highlighting; do
+      if [ ! -f "/usr/share/zsh/plugins/$pkg/$pkg.zsh" ] && [ ! -f "/usr/share/$pkg/$pkg.zsh" ]; then
+        install_pkg "$pkg"
+      fi
+    done
+  else
+    for pkg in zsh-autosuggestions zsh-syntax-highlighting; do
+      if [ ! -f "/usr/share/$pkg/$pkg.zsh" ]; then
+        install_pkg "$pkg"
+      fi
+    done
+  fi
 else
   if ! command -v git >/dev/null 2>&1; then
     error "git not found. Install Xcode CLI tools: xcode-select --install"
