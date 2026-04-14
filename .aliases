@@ -41,18 +41,12 @@ alias gstc='git stash clear'
 alias gstall='git stash --all'
 
 # ----------------------------------------------------------------------------
-# LS
+# Eza (modern ls replacement)
 # ----------------------------------------------------------------------------
-if ls --color=auto / >/dev/null 2>&1; then
-  # Linux (GNU ls)
-  alias ls='ls --color=auto'
-else
-  # macOS (BSD ls)
-  alias ls='ls -G'
-fi
-alias ll='ls -AlFh'
-alias la='ls -A'
-alias lt='tree -C -L 2'
+alias ls="eza"
+alias ll="eza -l --git"
+alias la="eza -la --git"
+alias lt="eza --tree --level=2"
 
 # ----------------------------------------------------------------------------
 # Navigation

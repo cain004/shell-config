@@ -95,7 +95,7 @@ if [ "$OS" = "linux" ]; then
   }
 
   # Core packages
-  for cmd in git zsh tmux tree nvim; do
+  for cmd in git zsh tmux tree nvim eza; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       pkg="$cmd"
       [ "$cmd" = "nvim" ] && pkg="neovim"
@@ -123,7 +123,7 @@ else
   fi
   if command -v brew >/dev/null 2>&1; then
     BREW_PREFIX="$(brew --prefix)"
-    for cmd in nvim tmux tree; do
+    for cmd in nvim tmux tree eza; do
       if ! command -v "$cmd" >/dev/null 2>&1; then
         info "Installing $cmd..."
         brew install "$cmd"
